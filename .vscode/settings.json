@@ -1,0 +1,5 @@
+{
+    "python.analysis.extraPaths": [
+        "/Users/douwehomans/Library/Application Support/Autodesk/Autodesk Fusion 360/API/Python/packages"
+    ]
+}
