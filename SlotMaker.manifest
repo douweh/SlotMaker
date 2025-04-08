@@ -2,7 +2,7 @@
 	"autodeskProduct":	"Fusion360",
 	"type":	"addin",
 	"id":	"f5724fac-d3d3-4d66-a3b9-c999d6f7e106",
-	"author":	"Your Name",
+	"author":	"Douwe Homans",
 	"description":	{
 		"":	"A Fusion 360 add-in for creating evenly spaced slots along selected lines on a face."
 	},

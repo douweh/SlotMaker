@@ -11,7 +11,7 @@ def run(context):
         ui = app.userInterface
         
         # Get the CommandDefinitions collection.
-        cmdDefs = ui.commandDefinitions
+        cmdDefs: adsk.core.CommandDefinitions = ui.commandDefinitions
         
         # Get the current directory
         current_dir = os.path.dirname(os.path.abspath(__file__))
@@ -22,8 +22,7 @@ def run(context):
             'SlotMakerButton',
             'Create Slots',
             'Creates evenly spaced slots along selected lines on a face.',
-            resources_dir,
-            'slot_icon.png'  # Name of your icon file
+            resources_dir
         )
         
         # Connect to the command created event.
@@ -108,19 +107,19 @@ class CommandCreatedEventHandler(adsk.core.CommandCreatedEventHandler):
                 'slotLength', 
                 'Slot Length', 
                 'mm', 
-                adsk.core.ValueInput.createByReal(22.0)
+                adsk.core.ValueInput.createByReal(2.20)
             )
             inputs.addValueInput(
                 'slotWidth', 
                 'Slot Width', 
                 'mm', 
-                adsk.core.ValueInput.createByReal(5.0)
+                adsk.core.ValueInput.createByReal(0.5)
             )
             inputs.addValueInput(
                 'slotDepth', 
                 'Slot Depth', 
                 'mm', 
-                adsk.core.ValueInput.createByReal(15.0)
+                adsk.core.ValueInput.createByReal(1.5)
             )
             
             # Connect to the execute event.
@@ -168,8 +167,6 @@ class CommandExecuteHandler(adsk.core.CommandEventHandler):
             sketches = face.body.parentComponent.sketches
             sketch: adsk.fusion.Sketch = sketches.add(face)
 
-
-            
             # Process each selected line
             for line in selectedLines:
 
@@ -233,11 +230,6 @@ class CommandExecuteHandler(adsk.core.CommandEventHandler):
                     
 
                     
-            # Create the profile
-
-            # show an ui message box with the number of profiles in the sketch
-            ui.messageBox('Number of profiles in sketch: {}'.format(sketch.profiles.count))
-
             # If there are more than 1 profiles, we need to create a collection of all but the one that is actually the face
             if sketch.profiles.count > 1:
                 profs = adsk.core.ObjectCollection.create()
@@ -273,11 +265,8 @@ class CommandExecuteHandler(adsk.core.CommandEventHandler):
             extent = adsk.fusion.DistanceExtentDefinition.create(distance)
             extInput.setOneSideExtent(extent, adsk.fusion.ExtentDirections.NegativeExtentDirection)
             
-            # # Get the body to cut from the face
-            body = face.body
-            
             # Set the direction to cut into the body
-            extInput.participantBodies = [body]
+            extInput.participantBodies = [face.body]
             
             # Create the extrusion
             extrudes.add(extInput)
