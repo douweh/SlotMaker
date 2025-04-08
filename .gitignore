@@ -23,6 +23,8 @@ var/
 .installed.cfg
 *.egg
 
+.DS_Store
+
 # Virtual Environment
 venv/
 ENV/
